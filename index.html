@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScootWay</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>ScootWay</h1>
+        <button id="getStarted">Get Started</button>
+
+        <div id="mapSection" style="display:none;">
+            <input type="text" id="start" placeholder="Départ">
+            <input type="text" id="end" placeholder="Arrivée">
+            <button onclick="calculateRoute()">Tracer l'itinéraire</button>
+            <div id="map"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
