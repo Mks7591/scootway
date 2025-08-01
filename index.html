@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Scootway - Itinéraire Scooter 50cc</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<style>
+  #map { height: 500px; width: 100%; }
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  input, button { padding: 8px; margin: 5px 0; width: 100%; max-width: 400px; }
+  #instructions { margin-top: 20px; max-width: 400px; }
+</style>
+</head>
+<body>
+
+<h1>Scootway - Itinéraire Scooter 50cc</h1>
+
+<label for="start">Point de départ :</label>
+<input type="text" id="start" placeholder="Entrez le point de départ" />
+
+<label for="end">Destination :</label>
+<input type="text" id="end" placeholder="Entrez la destination" />
+
+<button id="routeBtn">Calculer l'itinéraire</button>
+
+<div id="map"></div>
+
+<div id="instructions"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  const map = L.map('map').setView([48.8566, 2.3522], 13); // Paris par défaut
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+  }).addTo(map);
+
+  let routeLayer;
+
+  async function geocode(query) {
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    if (data.length > 0) {
+      return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+    } else {
+      alert("Adresse non trouvée : " + query);
+      throw new Error("Adresse non trouvée");
+    }
+  }
+
+  async function calculateRoute(startCoords, endCoords) {
+    const apiKey = 'eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImE5NmU3ZmZkZTRjNjQ4YmY4MWI0MmE2N2RjYjJmYmE0IiwiaCI6Im11cm11cjY0In0='; // Remplacez par votre clé ORS
+    const url = `https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${apiKey}`;
+    // Note : OpenRouteService ne propose pas de profil "scooter 50cc" mais "foot-walking" évite autoroutes et voies rapides.
+    // Pour un profil plus adapté, vous pouvez tester "cycling-regular" ou "cycling-electric" mais attention aux voies rapides.
+    const body = {
+      coordinates: [
+        [startCoords[1], startCoords[0]],
+        [endCoords[1], endCoords[0]]
+      ],
+      options: {
+        avoid_features: ["highways", "ferries"]
+      }
+    };
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!response.ok) {
+      alert("Erreur lors du calcul de l'itinéraire");
+      throw new Error("Erreur API ORS");
+    }
+
+    const data = await response.json();
+    return data;
+  }
+
+  function displayRoute(routeData) {
+    if (routeLayer) {
+      map.removeLayer(routeLayer);
+    }
+    const coords = routeData.features[0].geometry.coordinates.map(c => [c[1], c[0]]);
+    routeLayer = L.polyline(coords, { color: 'blue' }).addTo(map);
+    map.fitBounds(routeLayer.getBounds());
+
+    // Affichage des instructions
+    const steps = routeData.features[0].properties.segments[0].steps;
+    const instructionsDiv = document.getElementById('instructions');
+    instructionsDiv.innerHTML = '<h3>Instructions :</h3><ol>' +
+      steps.map(step => `<li>${step.instruction} (${step.distance.toFixed(0)} m)</li>`).join('') +
+      '</ol>';
+  }
+
+  document.getElementById('routeBtn').addEventListener('click', async () => {
+    const start = document.getElementById('start').value.trim();
+    const end = document.getElementById('end').value.trim();
+    if (!start || !end) {
+      alert("Veuillez saisir le point de départ et la destination.");
+      return;
+    }
+    try {
+      const startCoords = await geocode(start);
+      const endCoords = await geocode(end);
+      const routeData = await calculateRoute(startCoords, endCoords);
+      displayRoute(routeData);
+    } catch (e) {
+      console.error(e);
+    }
+  });
+</script>
+
+</body>
+</html>
