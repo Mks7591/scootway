@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ScootWay - Historique</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; background: #f0f0f0; color: #222;
+    display: flex; flex-direction: column; min-height: 100vh;
+  }
+  header {
+    background-color: #2A6F9E;
+    color: white;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  header img {
+    height: 40px;
+  }
+  header h1 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+  main {
+    flex: 1;
+    max-width: 480px;
+    margin: 20px auto;
+    padding: 0 15px;
+  }
+  h2 {
+    color: #2A6F9E;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  li {
+    background: white;
+    margin-bottom: 12px;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  li:hover {
+    background-color: #f9e6d1;
+  }
+  nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+  }
+  nav button {
+    background: none;
+    border: none;
+    color: #222;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  nav button.active, nav button:hover {
+    color: #F58220;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="images/logo.png" alt="ScootWay" />
+  <h1>ScootWay</h1>
+</header>
+
+<main>
+  <h2>Historique des itinéraires</h2>
+  <ul>
+    <li>Itinéraire du 12/06/2024 - 3,2 km</li>
+    <li>Itinéraire du 10/06/2024 - 5,1 km</li>
+    <li>Itinéraire du 08/06/2024 - 2,8 km</li>
+  </ul>
+</main>
+
+<nav>
+  <button onclick="location.href='carte.html'">Accueil</button>
+  <button onclick="location.href='carte.html'">Localisation</button>
+  <button class="active" onclick="location.href='historique.html'">Historique</button>
+  <button onclick="location.href='documents.html'">Documents</button>
+  <button onclick="location.href='parametres.html'">Paramètres</button>
+</nav>
+
+</body>
+</html>
