@@ -18,6 +18,13 @@
     align-items: center;
     gap: 10px;
   }
+  header a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
+  }
   header img {
     height: 40px;
   }
@@ -80,8 +87,10 @@
 <body>
 
 <header>
-  <img src="images/logo.png" alt="ScootWay" />
-  <h1>ScootWay</h1>
+  <a href="index.html">
+    <img src="images/scootway.png" alt="ScootWay" />
+    <h1>ScootWay</h1>
+  </a>
 </header>
 
 <div class="controls">
@@ -102,7 +111,7 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-   const apiKey = '5b3ce3597851110001cf6248abcdef1234567890'; // Remplacez par votre clé OpenRouteService
+  const apiKey = 'eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImE5NmU3ZmZkZTRjNjQ4YmY4MWI0MmE2N2RjYjJmYmE0IiwiaCI6Im11cm11cjY0In0=';
 
   const map = L.map('map').setView([48.8566, 2.3522], 12);
 
