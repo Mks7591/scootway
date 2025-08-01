@@ -5,213 +5,112 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ScootWay - Accueil</title>
 <style>
-  /* Palette de couleurs */
-  :root {
-    --blue: #2A6F9E;
-    --orange: #F58220;
-    --dark: #0D1B2A;
-    --gray-light: #F5F5F5;
-    --gray-dark: #333;
-    --white: #fff;
-  }
-
   body {
-    margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--gray-light);
-    color: var(--dark);
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    margin: 0; background: #f0f0f0; color: #222;
+    display: flex; flex-direction: column; min-height: 100vh;
   }
-
   header {
-    background-color: var(--blue);
-    color: var(--white);
-    padding: 20px 15px;
+    background-color: #2A6F9E;
+    color: white;
+    padding: 10px 15px;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
   }
-
   header img {
-    width: 48px;
-    height: 48px;
+    height: 40px;
   }
-
   header h1 {
-    font-size: 1.8rem;
     margin: 0;
     font-weight: 700;
+    font-size: 1.5rem;
   }
-
   main {
     flex: 1;
-    padding: 20px 15px;
     max-width: 480px;
-    margin: 0 auto;
-    width: 100%;
+    margin: 20px auto;
+    padding: 0 15px;
   }
-
-  .card {
-    background-color: var(--white);
+  section {
+    background: white;
+    padding: 25px 20px;
     border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     margin-bottom: 20px;
+    text-align: center;
   }
-
-  .card h2 {
+  section h2 {
     margin-top: 0;
-    font-size: 1.5rem;
-    color: var(--dark);
+    font-size: 1.8rem;
+    color: #2A6F9E;
   }
-
-  .card p {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 20px;
-  }
-
-  .btn-primary {
-    background-color: var(--orange);
-    color: var(--white);
-    border: none;
-    padding: 14px 0;
-    width: 100%;
+  section p {
     font-size: 1.1rem;
-    font-weight: 600;
+    margin: 15px 0 25px;
+    color: #444;
+  }
+  button {
+    background-color: #F58220;
+    color: white;
+    border: none;
+    padding: 16px;
+    width: 100%;
     border-radius: 30px;
+    font-weight: 700;
+    font-size: 1.2rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
-
-  .btn-primary:hover {
+  button:hover {
     background-color: #d46f00;
   }
-
-  .nearby-scooter {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background-color: var(--blue);
-    color: var(--white);
-    padding: 12px 20px;
-    border-radius: 12px;
-    font-weight: 600;
-  }
-
-  .nearby-scooter svg {
-    width: 32px;
-    height: 32px;
-    fill: var(--white);
-  }
-
   nav {
-    background-color: var(--white);
-    box-shadow: 0 -2px 8px rgb(0 0 0 / 0.1);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
     display: flex;
     justify-content: space-around;
     padding: 10px 0;
-    position: sticky;
-    bottom: 0;
   }
-
   nav button {
     background: none;
     border: none;
-    color: var(--dark);
-    font-size: 1.4rem;
+    color: #222;
+    font-size: 1rem;
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
+    font-weight: 600;
+    transition: color 0.3s ease;
   }
-
-  nav button svg {
-    width: 24px;
-    height: 24px;
-    fill: var(--dark);
-  }
-
   nav button.active, nav button:hover {
-    color: var(--orange);
-  }
-
-  /* Responsive */
-  @media (min-width: 600px) {
-    main {
-      padding: 40px 30px;
-    }
+    color: #F58220;
   }
 </style>
 </head>
 <body>
 
 <header>
-  <!-- Logo SVG simplifié, vous pouvez remplacer par votre fichier -->
-  <svg width="48" height="48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="32" cy="32" r="30" stroke="#F58220" stroke-width="4"/>
-    <path d="M20 44h24l-4-20H24l-4 20z" fill="#2A6F9E"/>
-    <circle cx="24" cy="48" r="6" fill="#F58220"/>
-    <circle cx="40" cy="48" r="6" fill="#F58220"/>
-    <text x="32" y="20" text-anchor="middle" fill="#F58220" font-size="14" font-weight="bold" font-family="Arial">50</text>
-  </svg>
+  <img src="images/logo.png" alt="ScootWay" />
   <h1>ScootWay</h1>
 </header>
 
 <main>
-  <section class="card">
-    <h2>Ride at 50 km/h</h2>
-    <p>Enjoy safe and comfortable rides with our scooters.</p>
-    <button class="btn-primary" onclick="location.href='carte.html'">Get started</button>
-  </section>
-
-  <section class="card nearby-scooter">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M5 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm14 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7-9c-1.1 0-2 .9-2 2v5h4v-5c0-1.1-.9-2-2-2z"/>
-    </svg>
-    80% battery<br />
-    Distance: 250 m
+  <section>
+    <h2>Roulez à 50 km/h</h2>
+    <p>Profitez de trajets sûrs et confortables avec nos scooters.</p>
+    <button onclick="location.href='carte.html'">Commencer</button>
   </section>
 </main>
 
 <nav>
-  <button class="active" aria-label="Home">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-    </svg>
-    Home
-  </button>
-  <button aria-label="Location">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM7 9c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4-4-1.79-4-4z"/>
-    </svg>
-    Location
-  </button>
-  <button aria-label="History">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M13 3a9 9 0 1 0 9 9h-2a7 7 0 1 1-7-7V3z"/>
-      <path d="M12 7v5l4 2"/>
-    </svg>
-    History
-  </button>
-  <button aria-label="Compass">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M12 2l4 10-4 4-4-4 4-10z"/>
-      <circle cx="12" cy="12" r="10" fill="none" stroke="#000" stroke-width="2"/>
-    </svg>
-    Compass
-  </button>
-  <button aria-label="Settings">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M19.14 12.94a1.5 1.5 0 0 0 0-1.88l2.03-1.57-2-3.46-2.4 1.39a6.96 6.96 0 0 0-1.5-.88l-.36-2.54h-4l-.36 2.54a6.96 6.96 0 0 0-1.5.88l-2.4-1.39-2 3.46 2.03 1.57a1.5 1.5 0 0 0 0 1.88l-2.03 1.57 2 3.46 2.4-1.39c.44.3.92.52 1.5.88l.36 2.54h4l.36-2.54a6.96 6.96 0 0 0 1.5-.88l2.4 1.39 2-3.46-2.03-1.57z"/>
-    </svg>
-    Settings
-  </button>
+  <button class="active" onclick="location.href='carte.html'">Accueil</button>
+  <button onclick="location.href='carte.html'">Localisation</button>
+  <button onclick="location.href='historique.html'">Historique</button>
+  <button onclick="location.href='documents.html'">Documents</button>
+  <button onclick="location.href='parametres.html'">Paramètres</button>
 </nav>
 
 </body>
 </html>
-
