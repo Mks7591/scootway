@@ -3,35 +3,86 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ScootWay - Carte avec itinéraire</title>
+<title>ScootWay - Carte</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
-  body, html { margin:0; padding:0; height:100%; font-family: Arial, sans-serif; }
-  #map { height: 70vh; }
+  body, html {
+    margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex; flex-direction: column;
+  }
+  header {
+    background-color: #2A6F9E;
+    color: white;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  header img {
+    height: 40px;
+  }
+  header h1 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
   .controls {
-    padding: 10px;
+    padding: 15px;
     background: #f5f5f5;
   }
   input, button {
-    padding: 8px;
-    margin: 5px 0;
+    padding: 12px;
+    margin: 8px 0;
     width: 100%;
     box-sizing: border-box;
     font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
   }
   button {
     background-color: #F58220;
     color: white;
     border: none;
-    border-radius: 25px;
+    font-weight: 700;
     cursor: pointer;
+    transition: background-color 0.3s ease;
   }
   button:hover {
     background-color: #d46f00;
   }
+  #map {
+    flex: 1;
+  }
+  nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+  }
+  nav button {
+    background: none;
+    border: none;
+    color: #222;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  nav button.active, nav button:hover {
+    color: #F58220;
+  }
 </style>
 </head>
 <body>
+
+<header>
+  <img src="images/logo.png" alt="ScootWay" />
+  <h1>ScootWay</h1>
+</header>
 
 <div class="controls">
   <input type="text" id="start" placeholder="Adresse de départ" />
@@ -39,13 +90,21 @@
   <button id="calcRoute">Calculer l'itinéraire</button>
 </div>
 
-<div id="map"></div>
+<div id="map" style="height: 60vh;"></div>
+
+<nav>
+  <button onclick="location.href='carte.html'" class="active">Accueil</button>
+  <button onclick="location.href='carte.html'">Localisation</button>
+  <button onclick="location.href='historique.html'">Historique</button>
+  <button onclick="location.href='documents.html'">Documents</button>
+  <button onclick="location.href='parametres.html'">Paramètres</button>
+</nav>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-  const apiKey = '5b3ce3597851110001cf6248abcdef1234567890'; // Remplacez par votre clé OpenRouteService
+  const apiKey = 'VOTRE_CLE_API'; // Remplacez par votre clé OpenRouteService
 
-  const map = L.map('map').setView([48.8566, 2.3522], 12); // Paris par défaut
+  const map = L.map('map').setView([48.8566, 2.3522], 12);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -53,7 +112,6 @@
 
   let routeLayer;
 
-  // Fonction simple pour géocoder via Nominatim (OpenStreetMap)
   async function geocode(address) {
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
     const res = await fetch(url);
@@ -62,13 +120,12 @@
     return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
   }
 
-  // Fonction pour calculer l'itinéraire via OpenRouteService
   async function calculateRoute(startCoords, endCoords) {
-    const url = 'https://api.openrouteservice.org/v2/directions/foot-walking/geojson';
+    const url = 'https://api.openrouteservice.org/v2/directions/cycling-regular/geojson';
 
     const body = {
       coordinates: [
-        [startCoords[1], startCoords[0]], // lon, lat
+        [startCoords[1], startCoords[0]],
         [endCoords[1], endCoords[0]]
       ]
     };
@@ -103,18 +160,14 @@
       const startCoords = await geocode(startAddr);
       const endCoords = await geocode(endAddr);
 
-      // Supprimer ancien itinéraire
       if (routeLayer) map.removeLayer(routeLayer);
 
-      // Calculer itinéraire via ORS
       const routeGeoJSON = await calculateRoute(startCoords, endCoords);
 
-      // Ajouter itinéraire sur la carte
       routeLayer = L.geoJSON(routeGeoJSON, {
         style: { color: '#F58220', weight: 5 }
       }).addTo(map);
 
-      // Ajuster vue
       map.fitBounds(routeLayer.getBounds());
 
     } catch (err) {
@@ -125,4 +178,3 @@
 
 </body>
 </html>
-
