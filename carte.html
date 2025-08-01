@@ -1,1 +1,92 @@
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ScootWay - Carte</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  body, html { margin:0; padding:0; height:100%; font-family: Arial, sans-serif; }
+  #map { height: 70vh; }
+  .controls {
+    padding: 10px;
+    background: #f5f5f5;
+  }
+  input, button {
+    padding: 8px;
+    margin: 5px 0;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
+  }
+  button {
+    background-color: #F58220;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #d46f00;
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <input type="text" id="start" placeholder="Adresse de départ" />
+  <input type="text" id="end" placeholder="Adresse d'arrivée" />
+  <button id="calcRoute">Calculer l'itinéraire</button>
+</div>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const map = L.map('map').setView([48.8566, 2.3522], 13); // Paris par défaut
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+  }).addTo(map);
+
+  let routeLayer;
+
+  // Fonction simple pour géocoder via Nominatim (OpenStreetMap)
+  async function geocode(address) {
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.length === 0) throw new Error("Adresse non trouvée");
+    return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+  }
+
+  document.getElementById('calcRoute').onclick = async () => {
+    const startAddr = document.getElementById('start').value.trim();
+    const endAddr = document.getElementById('end').value.trim();
+    if (!startAddr || !endAddr) {
+      alert("Veuillez saisir les deux adresses");
+      return;
+    }
+
+    try {
+      const startCoords = await geocode(startAddr);
+      const endCoords = await geocode(endAddr);
+
+      // Supprimer ancien itinéraire
+      if (routeLayer) map.removeLayer(routeLayer);
+
+      // Tracer ligne simple entre points (exemple basique)
+      routeLayer = L.polyline([startCoords, endCoords], {color: 'orange'}).addTo(map);
+
+      // Ajuster vue
+      map.fitBounds(routeLayer.getBounds());
+
+    } catch (err) {
+      alert("Erreur : " + err.message);
+    }
+  };
+</script>
+
+</body>
+</html>
