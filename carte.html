@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ScootWay - Carte</title>
+<title>ScootWay - Carte avec itinéraire</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
   body, html { margin:0; padding:0; height:100%; font-family: Arial, sans-serif; }
@@ -44,7 +43,9 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-  const map = L.map('map').setView([48.8566, 2.3522], 13); // Paris par défaut
+  const apiKey = '5b3ce3597851110001cf6248abcdef1234567890'; // Remplacez par votre clé OpenRouteService
+
+  const map = L.map('map').setView([48.8566, 2.3522], 12); // Paris par défaut
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -59,6 +60,35 @@
     const data = await res.json();
     if (data.length === 0) throw new Error("Adresse non trouvée");
     return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+  }
+
+  // Fonction pour calculer l'itinéraire via OpenRouteService
+  async function calculateRoute(startCoords, endCoords) {
+    const url = 'https://api.openrouteservice.org/v2/directions/foot-walking/geojson';
+
+    const body = {
+      coordinates: [
+        [startCoords[1], startCoords[0]], // lon, lat
+        [endCoords[1], endCoords[0]]
+      ]
+    };
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': apiKey,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error("Erreur API ORS : " + errorText);
+    }
+
+    const data = await response.json();
+    return data;
   }
 
   document.getElementById('calcRoute').onclick = async () => {
@@ -76,8 +106,13 @@
       // Supprimer ancien itinéraire
       if (routeLayer) map.removeLayer(routeLayer);
 
-      // Tracer ligne simple entre points (exemple basique)
-      routeLayer = L.polyline([startCoords, endCoords], {color: 'orange'}).addTo(map);
+      // Calculer itinéraire via ORS
+      const routeGeoJSON = await calculateRoute(startCoords, endCoords);
+
+      // Ajouter itinéraire sur la carte
+      routeLayer = L.geoJSON(routeGeoJSON, {
+        style: { color: '#F58220', weight: 5 }
+      }).addTo(map);
 
       // Ajuster vue
       map.fitBounds(routeLayer.getBounds());
@@ -90,3 +125,4 @@
 
 </body>
 </html>
+
