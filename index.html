@@ -51,7 +51,7 @@
   }
 
   async function calculateRoute(startCoords, endCoords) {
-    const apiKey = 'eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImE5NmU3ZmZkZTRjNjQ4YmY4MWI0MmE2N2RjYjJmYmE0IiwiaCI6Im11cm11cjY0In0='; // Remplacez par votre clé ORS
+    const apiKey = '5b3ce3597851110001cf6248abcdef1234567890';
     const url = `https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${apiKey}`;
     // Note : OpenRouteService ne propose pas de profil "scooter 50cc" mais "foot-walking" évite autoroutes et voies rapides.
     // Pour un profil plus adapté, vous pouvez tester "cycling-regular" ou "cycling-electric" mais attention aux voies rapides.
