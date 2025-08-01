@@ -18,6 +18,13 @@
     align-items: center;
     gap: 10px;
   }
+  header a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
+  }
   header img {
     height: 40px;
   }
@@ -90,29 +97,27 @@
 </style>
 </head>
 <body>
-  <header style="background-color:#2A6F9E; color:#fff; padding:10px 15px; display:flex; align-items:center; gap:10px;">
-    <img src="images/scootway.png" alt="ScootWay" style="height:40px;" />
-    <h1 style="margin:0; font-size:1.5rem;">ScootWay</h1>
+  <header>
+    <a href="index.html">
+      <img src="images/scootway.png" alt="ScootWay" />
+      <h1>ScootWay</h1>
+    </a>
   </header>
 
-  <!-- Le reste de votre contenu ici -->
-</body>
+  <main>
+    <section>
+      <h2>Roulez à 50 km/h</h2>
+      <p>Profitez de trajets sûrs et confortables avec nos scooters.</p>
+      <button onclick="location.href='carte.html'">Commencer</button>
+    </section>
+  </main>
 
-<main>
-  <section>
-    <h2>Roulez à 50 km/h</h2>
-    <p>Profitez de trajets sûrs et confortables avec nos scooters.</p>
-    <button onclick="location.href='carte.html'">Commencer</button>
-  </section>
-</main>
-
-<nav>
-  <button class="active" onclick="location.href='carte.html'">Accueil</button>
-  <button onclick="location.href='carte.html'">Localisation</button>
-  <button onclick="location.href='historique.html'">Historique</button>
-  <button onclick="location.href='documents.html'">Documents</button>
-  <button onclick="location.href='parametres.html'">Paramètres</button>
-</nav>
-
+  <nav>
+    <button class="active" onclick="location.href='carte.html'">Accueil</button>
+    <button onclick="location.href='carte.html'">Localisation</button>
+    <button onclick="location.href='historique.html'">Historique</button>
+    <button onclick="location.href='documents.html'">Documents</button>
+    <button onclick="location.href='parametres.html'">Paramètres</button>
+  </nav>
 </body>
 </html>
