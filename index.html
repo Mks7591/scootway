@@ -51,35 +51,36 @@
   }
 
   async function calculateRoute(startCoords, endCoords) {
-    const apiKey = '5b3ce3597851110001cf6248abcdef1234567890';
-    const url = `https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${apiKey}`;
-    // Note : OpenRouteService ne propose pas de profil "scooter 50cc" mais "foot-walking" évite autoroutes et voies rapides.
-    // Pour un profil plus adapté, vous pouvez tester "cycling-regular" ou "cycling-electric" mais attention aux voies rapides.
-    const body = {
-      coordinates: [
-        [startCoords[1], startCoords[0]],
-        [endCoords[1], endCoords[0]]
-      ],
-      options: {
-        avoid_features: ["highways", "ferries"]
-      }
-    };
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
-
-    if (!response.ok) {
-      alert("Erreur lors du calcul de l'itinéraire");
-      throw new Error("Erreur API ORS");
+   const apiKey = '5b3ce3597851110001cf6248abcdef1234567890';
+  const url = `https://api.openrouteservice.org/v2/directions/foot-walking`;
+  const body = {
+    coordinates: [
+      [startCoords[1], startCoords[0]],
+      [endCoords[1], endCoords[0]]
+    ],
+    options: {
+      avoid_features: ["highways", "ferries"]
     }
+  };
 
-    const data = await response.json();
-    return data;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': apiKey
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    alert("Erreur lors du calcul de l'itinéraire : " + errorText);
+    throw new Error("Erreur API ORS : " + errorText);
+  }
+
+  const data = await response.json();
+  return data;
+
   }
 
   function displayRoute(routeData) {
