@@ -1,121 +1,248 @@
+Parfait ! Voici un exemple simple de page d’accueil web reprenant le style et les couleurs de votre logo ScootWay, avec une mise en page épurée et responsive, adaptée à une utilisation mobile et desktop.
+
+---
+
+### Exemple complet HTML + CSS
+
+```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Scootway - Itinéraire Scooter 50cc</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<title>ScootWay - Accueil</title>
 <style>
-  #map { height: 500px; width: 100%; }
-  body { font-family: Arial, sans-serif; margin: 20px; }
-  input, button { padding: 8px; margin: 5px 0; width: 100%; max-width: 400px; }
-  #instructions { margin-top: 20px; max-width: 400px; }
+  /* Palette de couleurs */
+  :root {
+    --blue: #2A6F9E;
+    --orange: #F58220;
+    --dark: #0D1B2A;
+    --gray-light: #F5F5F5;
+    --gray-dark: #333;
+    --white: #fff;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--gray-light);
+    color: var(--dark);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  header {
+    background-color: var(--blue);
+    color: var(--white);
+    padding: 20px 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  header img {
+    width: 48px;
+    height: 48px;
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  main {
+    flex: 1;
+    padding: 20px 15px;
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .card {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+    margin-bottom: 20px;
+  }
+
+  .card h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: var(--dark);
+  }
+
+  .card p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  .btn-primary {
+    background-color: var(--orange);
+    color: var(--white);
+    border: none;
+    padding: 14px 0;
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #d46f00;
+  }
+
+  .nearby-scooter {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--blue);
+    color: var(--white);
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+
+  .nearby-scooter svg {
+    width: 32px;
+    height: 32px;
+    fill: var(--white);
+  }
+
+  nav {
+    background-color: var(--white);
+    box-shadow: 0 -2px 8px rgb(0 0 0 / 0.1);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    position: sticky;
+    bottom: 0;
+  }
+
+  nav button {
+    background: none;
+    border: none;
+    color: var(--dark);
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  nav button svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--dark);
+  }
+
+  nav button.active, nav button:hover {
+    color: var(--orange);
+  }
+
+  /* Responsive */
+  @media (min-width: 600px) {
+    main {
+      padding: 40px 30px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<h1>Scootway - Itinéraire Scooter 50cc</h1>
+<header>
+  <!-- Logo SVG simplifié, vous pouvez remplacer par votre fichier -->
+  <svg width="48" height="48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="32" cy="32" r="30" stroke="#F58220" stroke-width="4"/>
+    <path d="M20 44h24l-4-20H24l-4 20z" fill="#2A6F9E"/>
+    <circle cx="24" cy="48" r="6" fill="#F58220"/>
+    <circle cx="40" cy="48" r="6" fill="#F58220"/>
+    <text x="32" y="20" text-anchor="middle" fill="#F58220" font-size="14" font-weight="bold" font-family="Arial">50</text>
+  </svg>
+  <h1>ScootWay</h1>
+</header>
 
-<label for="start">Point de départ :</label>
-<input type="text" id="start" placeholder="Entrez le point de départ" />
+<main>
+  <section class="card">
+    <h2>Ride at 50 km/h</h2>
+    <p>Enjoy safe and comfortable rides with our scooters.</p>
+    <button class="btn-primary">Get started</button>
+  </section>
 
-<label for="end">Destination :</label>
-<input type="text" id="end" placeholder="Entrez la destination" />
+  <section class="card nearby-scooter">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M5 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm14 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7-9c-1.1 0-2 .9-2 2v5h4v-5c0-1.1-.9-2-2-2z"/>
+    </svg>
+    80% battery<br />
+    Distance: 250 m
+  </section>
+</main>
 
-<button id="routeBtn">Calculer l'itinéraire</button>
-
-<div id="map"></div>
-
-<div id="instructions"></div>
-
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script>
-  const map = L.map('map').setView([48.8566, 2.3522], 13); // Paris par défaut
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-  }).addTo(map);
-
-  let routeLayer;
-
-  async function geocode(query) {
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    if (data.length > 0) {
-      return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
-    } else {
-      alert("Adresse non trouvée : " + query);
-      throw new Error("Adresse non trouvée");
-    }
-  }
-
-  async function calculateRoute(startCoords, endCoords) {
-   const apiKey = '5b3ce3597851110001cf6248abcdef1234567890';
-  const url = `https://api.openrouteservice.org/v2/directions/foot-walking`;
-  const body = {
-    coordinates: [
-      [startCoords[1], startCoords[0]],
-      [endCoords[1], endCoords[0]]
-    ],
-    options: {
-      avoid_features: ["highways", "ferries"]
-    }
-  };
-
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': apiKey
-    },
-    body: JSON.stringify(body)
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    alert("Erreur lors du calcul de l'itinéraire : " + errorText);
-    throw new Error("Erreur API ORS : " + errorText);
-  }
-
-  const data = await response.json();
-  return data;
-
-  }
-
-  function displayRoute(routeData) {
-    if (routeLayer) {
-      map.removeLayer(routeLayer);
-    }
-    const coords = routeData.features[0].geometry.coordinates.map(c => [c[1], c[0]]);
-    routeLayer = L.polyline(coords, { color: 'blue' }).addTo(map);
-    map.fitBounds(routeLayer.getBounds());
-
-    // Affichage des instructions
-    const steps = routeData.features[0].properties.segments[0].steps;
-    const instructionsDiv = document.getElementById('instructions');
-    instructionsDiv.innerHTML = '<h3>Instructions :</h3><ol>' +
-      steps.map(step => `<li>${step.instruction} (${step.distance.toFixed(0)} m)</li>`).join('') +
-      '</ol>';
-  }
-
-  document.getElementById('routeBtn').addEventListener('click', async () => {
-    const start = document.getElementById('start').value.trim();
-    const end = document.getElementById('end').value.trim();
-    if (!start || !end) {
-      alert("Veuillez saisir le point de départ et la destination.");
-      return;
-    }
-    try {
-      const startCoords = await geocode(start);
-      const endCoords = await geocode(end);
-      const routeData = await calculateRoute(startCoords, endCoords);
-      displayRoute(routeData);
-    } catch (e) {
-      console.error(e);
-    }
-  });
-</script>
+<nav>
+  <button class="active" aria-label="Home">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+    </svg>
+    Home
+  </button>
+  <button aria-label="Location">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM7 9c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4-4-1.79-4-4z"/>
+    </svg>
+    Location
+  </button>
+  <button aria-label="History">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M13 3a9 9 0 1 0 9 9h-2a7 7 0 1 1-7-7V3z"/>
+      <path d="M12 7v5l4 2"/>
+    </svg>
+    History
+  </button>
+  <button aria-label="Compass">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 2l4 10-4 4-4-4 4-10z"/>
+      <circle cx="12" cy="12" r="10" fill="none" stroke="#000" stroke-width="2"/>
+    </svg>
+    Compass
+  </button>
+  <button aria-label="Settings">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M19.14 12.94a1.5 1.5 0 0 0 0-1.88l2.03-1.57-2-3.46-2.4 1.39a6.96 6.96 0 0 0-1.5-.88l-.36-2.54h-4l-.36 2.54a6.96 6.96 0 0 0-1.5.88l-2.4-1.39-2 3.46 2.03 1.57a1.5 1.5 0 0 0 0 1.88l-2.03 1.57 2 3.46 2.4-1.39c.44.3.92.52 1.5.88l.36 2.54h4l.36-2.54a6.96 6.96 0 0 0 1.5-.88l2.4 1.39 2-3.46-2.03-1.57z"/>
+    </svg>
+    Settings
+  </button>
+</nav>
 
 </body>
 </html>
+```
+
+---
+
+### Explications
+
+- Le **header** contient votre logo simplifié en SVG et le nom ScootWay.
+- Le **main** affiche une carte d’appel à l’action avec un bouton "Get started" et une carte info sur la batterie et la distance d’un scooter proche.
+- La **barre de navigation** en bas reprend les icônes classiques (accueil, localisation, historique, boussole, réglages) avec un style simple.
+- Les couleurs et typographies sont proches de votre logo et design partagé.
+- La page est responsive et s’adapte bien aux mobiles et écrans plus larges.
+
+---
+
+### Pour aller plus loin
+
+- Vous pouvez remplacer le SVG du logo par votre fichier officiel en haute qualité.
+- Ajouter des animations ou transitions CSS pour rendre l’interface plus dynamique.
+- Intégrer vos fonctionnalités (itinéraire, stockage documents, stations essence) dans cette structure.
+
+---
+
+Si vous voulez, je peux aussi vous aider à intégrer ce design dans votre prototype d’itinéraire ou à créer une version React/Flutter pour une app mobile.
+
+Dites-moi ce que vous préférez !
